@@ -71,7 +71,7 @@ pip install -r requirements.txt
 uvicorn app.server:app --host 127.0.0.1 --port 5001 --reload
 ```
 
-The server will start on:  
+The server will start on:
 👉 **http://127.0.0.1:5001**
 
 ---
@@ -83,7 +83,8 @@ Check if the API is up and connected to Ollama.
 ```bash
 curl 127.0.0.1:5001/health
 ```
-Response:
+
+**Response**
 ```json
 {
   "status": "ok",
@@ -92,12 +93,18 @@ Response:
 }
 ```
 
+---
+
 ### 💬 POST `/api/ask`
 Send a prompt to your local Ollama model and receive the model’s response.
+
 ```bash
-curl -X POST 127.0.0.1:5001/api/ask -H "Content-Type: application/json" -d '{"q": "Hello"}'
+curl -X POST 127.0.0.1:5001/api/ask \
+     -H "Content-Type: application/json" \
+     -d '{"q": "Hello"}'
 ```
-Response:
+
+**Response**
 ```json
 {
   "answer": "Hello! How can I help you today?",
@@ -111,31 +118,33 @@ Response:
 
 To allow another teammate (e.g., Hayden) to connect:
 
-1️⃣ Get your local IP:
-```bash
-hostname -I
-```
+1. Get your local IP:
+   ```bash
+   hostname -I
+   ```
 
-2️⃣ Edit your `.env`:
-```
-OLLAMA_BASE=http://<YOUR_LAN_IP>:11434
-RAG_PORT=5001
-```
+2. Update `.env`:
+   ```
+   OLLAMA_BASE=http://<YOUR_LAN_IP>:11434
+   RAG_PORT=5001
+   ```
 
-3️⃣ Run:
-```bash
-uvicorn app.server:app --host 0.0.0.0 --port 5001 --reload
-```
+3. Run the server for LAN access:
+   ```bash
+   uvicorn app.server:app --host 0.0.0.0 --port 5001 --reload
+   ```
 
-Then teammates can reach your server at:  
-👉 **http://<YOUR_LAN_IP>:5001/api/ask**
+Teammates can then connect at:
+```
+http://<YOUR_LAN_IP>:5001/api/ask
+```
 
 ---
 
 ## 🤝 Integration Example (.NET Web App)
 
-Example POST request from Hayden’s .NET app:
-```json
+Hayden’s .NET endpoint can call:
+```bash
 POST http://192.168.1.67:11434/api/generate
 {
   "model": "phi3:mini",
@@ -143,20 +152,19 @@ POST http://192.168.1.67:11434/api/generate
   "stream": false
 }
 ```
-Your FastAPI bridge handles forwarding and returning the LLM response.
+
+And your FastAPI bridge handles forwarding and returning the LLM response.
 
 ---
 
 ## 🧑‍💻 Maintainer
-
 **Nadia Sharief**  
 University of Arizona – AI for Healthcare Project  
-📧 Nadiasharief@arizona.edu  
+📧 Nadiasharief@arizona.edu
 
 ---
 
 ## 🩵 Credits
-
 - [Ollama](https://ollama.com)  
 - [FastAPI](https://fastapi.tiangolo.com)  
 - University of Arizona – AI for Healthcare Capstone Team
